@@ -1,0 +1,60 @@
+/* =========================================================
+   TIAA-WPSITE-V3
+   DO NOT EDIT THIS CODE IN WORDPRESS WITHOUT UPDATING REPO
+
+   Source of truth:
+   GitHub repo: tiaa-wpsite-v3
+   Path: assets/css/tokens.css
+
+   To request changes:
+   1. Open issue or edit in GitHub
+   2. Commit changes
+   3. Re-copy into Elementor
+   4. Update sync date below
+
+   Last Synced: 2026-02-12
+   ========================================================= */
+
+:root {
+    /* Brand */
+    --color-primary: #61B8A7;   /* Teal */
+    --color-accent:  #E38063;   /* Coral */
+    --color-ink:     #2C2E5D;   /* Primary text / headings */
+    --color-nav:     #2F3158;   /* Header/Footer background */
+
+    /* Neutrals */
+    --color-bg:      #EDF1F3;   /* Page background */
+    --color-surface: #F7F8F8;   /* Card surface */
+    --color-muted:   #6A6F8E;   /* Secondary text */
+    --color-border:  #D3D6D9;   /* Dividers / borders */
+    --color-white:   #FFFFFF;
+
+    /* Type */
+    --font-headings: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-body:     "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+    /* Radii */
+    --radius-card: 16px;
+    --radius-pill: 999px;
+
+    /* Spacing scale (use sparingly in custom.css) */
+    --space-1: 8px;
+    --space-2: 12px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space-5: 32px;
+    --space-6: 48px;
+    --space-7: 64px;
+    --space-8: 80px;
+
+    /* Shadows */
+    --shadow-card: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
+
+    /* Motion */
+    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --duration-fast: 150ms;
+    --duration-med:  220ms;
+
+    /* Accessibility */
+    --focus-ring: 0 0 0 3px rgba(97, 184, 167, 0.45); /* based on --color-primary */
+}

@@ -1,0 +1,10 @@
+Context:
+This conversation is part of the tiaa-wpsite-v3 project.
+Assume MVP phase, Elementor Pro, Hello theme,
+design source is Jive-coded Replit,
+and prior architectural decisions are settled.
+
+URL of replit site is here: https://techtaalk.replit.app/
+
+Attached to this conversation are is the archived project files containing screenshots of the replit site:
+~leg/DProjects/wp/shared/wp-test-html/wp-content/plugins/tiaa-wpsite-v3/docs/design-reference/replit-screenshots.gz

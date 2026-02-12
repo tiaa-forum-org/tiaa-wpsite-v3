@@ -1,0 +1,79 @@
+/* =========================================================
+   TIAA-WPSITE-V3
+   DO NOT EDIT THIS CODE IN WORDPRESS WITHOUT UPDATING REPO
+
+   Source of truth:
+   GitHub repo: tiaa-wpsite-v3
+   Path: assets/css/custom.css
+
+   To request changes:
+   1. Open issue or edit in GitHub
+   2. Update sync date below
+   3. Commit changes
+   3. Re-copy into Elementor
+
+   Last Synced: 2026-02-12
+   ========================================================= */
+
+/* ---- Global base ---- */
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+/* Headings default to your heading font, but Elementor will usually set these.
+   This helps only if something falls back to theme defaults. */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--color-ink);
+}
+
+/* ---- Links ---- */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+a:hover { opacity: 0.9; }
+a:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: 6px;
+}
+
+/* ---- Buttons (light-touch) ----
+   Elementor buttons vary by widget; this keeps it gentle.
+   Prefer setting actual button styles in Elementor Site Settings. */
+.elementor-button:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* ---- Card utility class (use on Containers via Advanced > CSS Classes) ---- */
+.tiaa-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+
+/* Optional: common interior padding helper */
+.tiaa-pad {
+    padding: var(--space-4);
+}
+
+/* ---- Nav/Footer helpers (ONLY if you decide to add classes in templates) ---- */
+.tiaa-nav-bg { background: var(--color-nav); color: var(--color-white); }
+.tiaa-nav-bg a { color: var(--color-white); }
+.tiaa-nav-bg a:hover { color: var(--color-primary); opacity: 1; }
+
+/* ---- Respect reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+}
