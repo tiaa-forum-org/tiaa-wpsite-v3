@@ -1,0 +1,31 @@
+```
+### HUMAN NOTES (Documentation Only — Not Instructions)
+
+// Attach the following file to this conversation before submitting:
+// ~leg/DProjects/wp/shared/wp-test-html/wp-content/plugins/tiaa-wpsite-v3/docs/design-reference/replit-screenshots.gz
+// Attached to this conversation are is the archived project files containing screenshots of the replit site:
+// replit-screenshots.gz
+The replit site is here: https://techtaalk.replit.app/
+The repository of the project is here: https://github.com/tiaa-forum-org/tiaa-wpsite-v3.git
+Before starting the conversation, download the repo and attach the zip file to this conversation.
+
+```
+
+Context:
+This conversation is part of the tiaa-wpsite-v3 project.
+Assume MVP phase, Elementor Pro, Hello theme,
+design source is Jive-coded Replit,
+and prior architectural decisions are settled.
+
+URL of replit site is here: https://techtaalk.replit.app/
+
+In the repository of the project, there are folders that contain documents of structure, project notes, and design
+reference including replit screenshots for desktop and mobile
+
+The website is to be hosted on WordPress with Elementor Pro from the design expressed in the Replit.
+
+The repository only contains the design reference and policy/procedure documents.
+
+The repository of the project is attaced to this conversation.
+
+-- start of conversation or task

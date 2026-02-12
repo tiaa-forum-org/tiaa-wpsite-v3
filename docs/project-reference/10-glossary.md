@@ -88,6 +88,12 @@ Used to share and manage the `tiaa-wpsite-v3` repository.
 
 ---
 
+## Hero
+
+Important text or an image that appears at the top of a page or post to draw attention to it, often used to introduce the content or highlight key information.
+
+---
+
 ## Hot Topics
 A project-specific Custom Post Type representing curated discussion topics (often linked to forum threads).
 

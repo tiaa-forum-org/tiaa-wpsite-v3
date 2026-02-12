@@ -21,7 +21,7 @@ html { scroll-behavior: smooth; }
 body {
     background: var(--color-bg);
     color: var(--color-ink);
-    font-family: var(--font-body);
+    font-family: var(--font-body), sans-serif;
     font-size: 18px;
     line-height: 1.55;
 }
@@ -29,7 +29,7 @@ body {
 /* Headings default to your heading font, but Elementor will usually set these.
    This helps only if something falls back to theme defaults. */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-headings);
+    font-family: var(--font-headings), sans-serif;
     color: var(--color-ink);
 }
 

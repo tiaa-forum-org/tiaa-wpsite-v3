@@ -1,0 +1,51 @@
+# TIAA Forum Website Rebuild Project
+
+## Objective
+Rebuild tiaa-forum.org using Elementor Pro based on a new design created in Replit. The goal is an MVP that volunteer maintainers with basic WordPress experience (but potentially limited Elementor Pro knowledge) can support long-term.
+
+## Current Tech Stack
+- WordPress with Hello Elementor theme
+- Elementor Pro for all page building and templates
+- Custom plugin: tiaa-wpplugin (handles forum signups and welcome messages)
+- WP-Discourse plugin: Discourse SSO integration
+- WP SimplePay plugin (Stripe payment processing)
+- Hosting: dev local on macOS, test/production hosted on DigitalOcean VPS in a docker compose stack
+- Development environment: IntelliJ IDEA with Docker Compose plugin to test locally
+- Version control: GitHub: https://github.com/tiaa-forum-org/tiaa-wpsite-v3.git
+
+## Critical Constraints
+- MUST preserve: Discourse SSO integration (forum signup/login flow)
+- MUST preserve: Existing anchor links in Hot Topics (e.g., #hotline, #webstart, #voting)
+- MUST preserve: Contact forms and Join form functionality
+- Team skill level: Comfortable with WordPress admin, variable experience with Elementor Pro's Theme Builder
+- Preference: Elementor-native solutions over custom code when possible
+- Preference: When custom code is required, process is to use cut-and-paste working code assets from a maintained GitHub repo
+
+## Design Source
+New design vibe-coded in Replit at https://techtaalk.replit.app/
+- Clean, modern aesthetic with navy (#1a2340), teal (#3bbfad), coral (#e8856a) color palette
+- Single sans-serif font (likely Inter or similar)
+- Responsive mobile-first design
+- Modify existing WordPress presentation to use posts instead of pages where SEO calls for it
+- See uploaded Replit source files and screenshots for details
+
+## Working Style Preferences
+- Give step-by-step Elementor instructions suitable for someone learning Theme Builder
+- Explain *why* we're doing something, not just *how* (helps volunteers understand and maintain)
+- Flag any sections that require plugins or custom CSS upfront
+- Default to simple, maintainable solutions over complex ones
+- When you need to see design details, I'll share screenshots in the conversation
+- Use the GitHub repo for code assets
+- Document major decisions in the repo's decision log
+
+## Key Pages to Build
+- Home (hero, features, stats, categories)
+- Hot Topics (curated discussion archive with search/filter - TBD on complexity)
+  Note: Hot Topics are curated summaries of popular forum discussions, not live forum content
+- The Forum (explainer pages, join flow)
+- About Us, Contact Us
+- Contribution page for logged in users only
+- 404 and other templates
+
+## Reference Materials
+See Project Knowledge for: architecture, content model, Elementor system structure, component library, glossary, and operations documentation.
