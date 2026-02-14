@@ -1,51 +1,384 @@
-# TIAA Forum Website Rebuild Project
+# TIAA Forum Rebuild - Project Instructions for Claude
 
 ## Objective
 Rebuild tiaa-forum.org using Elementor Pro based on a new design created in Replit. The goal is an MVP that volunteer maintainers with basic WordPress experience (but potentially limited Elementor Pro knowledge) can support long-term.
 
+---
+
 ## Current Tech Stack
-- WordPress with Hello Elementor theme
-- Elementor Pro for all page building and templates
-- Custom plugin: tiaa-wpplugin (handles forum signups and welcome messages)
-- WP-Discourse plugin: Discourse SSO integration
-- WP SimplePay plugin (Stripe payment processing)
-- Hosting: dev local on macOS, test/production hosted on DigitalOcean VPS in a docker compose stack
-- Development environment: IntelliJ IDEA with Docker Compose plugin to test locally
-- Version control: GitHub: https://github.com/tiaa-forum-org/tiaa-wpsite-v3.git
+- **WordPress** with Hello Elementor theme
+- **Elementor Pro** for all page building, templates, and conditional visibility
+- **Custom plugin**: tiaa-wpplugin (handles Discourse API integration for new member signups and welcome messages)
+- **WP-Discourse plugin**: Discourse SSO integration (Discourse is the SSO provider)
+- **WP SimplePay plugin**: Stripe payment processing for memberships
+- **Hosting**:
+  - Development: Local on macOS with Docker Compose
+  - Test/Production: DigitalOcean VPS with Docker Compose stack
+- **Development environment**: IntelliJ IDEA with Docker Compose plugin
+- **Version control**: GitHub - https://github.com/tiaa-forum-org/tiaa-wpsite-v3.git
+
+---
 
 ## Critical Constraints
-- MUST preserve: Discourse SSO integration (forum signup/login flow)
-- MUST preserve: Existing anchor links in Hot Topics (e.g., #hotline, #webstart, #voting)
-- MUST preserve: Contact forms and Join form functionality
-- Team skill level: Comfortable with WordPress admin, variable experience with Elementor Pro's Theme Builder
-- Preference: Elementor-native solutions over custom code when possible
-- Preference: When custom code is required, process is to use cut-and-paste working code assets from a maintained GitHub repo
+
+### MUST Preserve:
+- ✅ Discourse SSO integration (forum signup/login flow)
+- ✅ Existing anchor links in Hot Topics (e.g., #hotline, #webstart, #voting) for SEO
+- ✅ Contact forms and Join form functionality
+- ✅ Payment processing via WP SimplePay + Stripe
+
+### Team & Approach:
+- ✅ Team skill level: Comfortable with WordPress admin, variable experience with Elementor Pro's Theme Builder
+- ✅ Preference: Elementor-native solutions over custom code when possible
+- ✅ When custom code is required: Use cut-and-paste working code assets from maintained GitHub repo
+- ✅ Volunteer-friendly: Solutions must be maintainable by non-developers
+
+---
+
+## Authentication & User States
+
+### How Authentication Works:
+- **SSO Provider**: Discourse (NOT WordPress)
+- **Flow**: WordPress defers to Discourse for authentication via WP-Discourse plugin
+- **Member Status**: Stored in WP-Discourse profile fields
+- **Only members can log in** - anonymous visitors cannot create WordPress accounts directly
+
+### User States:
+1. **Anonymous Visitor** (not logged in)
+   - Has NOT joined the forum
+   - Cannot log into WordPress
+   - Sees "Join" button to sign up and pay
+
+2. **Logged-In Member** (authenticated via Discourse SSO)
+   - Has paid/joined the forum
+   - Can access member-only features
+   - Sees "Go to Forum", "Contribute", and "Logout" in navigation
+
+**See `conditional-navigation.md` for complete specification**
+
+---
+
+## Navigation Requirements
+
+### Static Navigation (visible to all users):
+- Home
+- Hot Topics
+- The Forum (explainer page about what the forum is)
+- About
+- Contact
+
+### Conditional Navigation (toggles based on login state):
+
+**For Anonymous Visitors:**
+- **"Join" button** (prominent, coral background)
+  - Links to `/join` page with signup form and payment
+  - Visibility: Show when User is Logged Out
+
+**For Logged-In Members:**
+- **"Go to Forum" button** (replaces "Join")
+  - Links directly to Discourse forum (SSO automatic)
+  - Visibility: Show when User is Logged In
+- **"Contribute" button/link**
+  - Links to `/contribute` page (member-only)
+  - Visibility: Show when User is Logged In
+- **"Logout" link**
+  - Logs user out of WordPress and Discourse
+  - Visibility: Show when User is Logged In
+
+**Implementation**: Use Elementor Pro's conditional visibility on individual button widgets in the Header template.
+
+---
+
+## Content Model
+
+### Hot Topics
+- **What they are**: Curated summaries of popular forum discussions (NOT live forum content)
+- **Implementation**: WordPress **Posts** (not Custom Post Type)
+- **Category**: "Hot Topics" (for filtering and archive pages)
+- **Custom Fields** (via ACF):
+  - Forum Thread URL (link to original Discourse discussion)
+  - Featured toggle (for homepage display)
+- **SEO**: Preserve existing anchor links (e.g., #hotline, #webstart, #voting)
+
+**Why Posts not CPT?**
+- Better SEO (WordPress optimizes posts for search)
+- Built-in archive/category pages
+- Easier for volunteers to manage
+- Standard WordPress workflow
+
+### Pages
+- **About** - Public page about the organization
+- **Contact** - Public page with contact form
+- **The Forum** - Public explainer page (what the forum is, benefits of joining)
+- **Join** (`/join`) - Public signup page with payment form (WP SimplePay + Stripe)
+- **Contribute** (`/contribute`) - Member-only page with contribution form/guidelines
+
+---
 
 ## Design Source
+
 New design vibe-coded in Replit at https://techtaalk.replit.app/
-- Clean, modern aesthetic with navy (#1a2340), teal (#3bbfad), coral (#e8856a) color palette
-- Single sans-serif font (likely Inter or similar)
-- Responsive mobile-first design
-- Modify existing WordPress presentation to use posts instead of pages where SEO calls for it
-- See uploaded Replit source files and screenshots for details
+
+### Design System:
+- **Colors**: Navy (#2b2e60), Teal (#31bba6), Coral (#f37758)
+- **Typography**: Single sans-serif font (Inter)
+- **Style**: Clean, modern, responsive mobile-first
+
+### Key Design Files:
+- See uploaded Replit source files and screenshots
+- CSS file: `docs/design-reference/replit-code/index-TMxO1IMj.css`
+- Color extraction: `color-extraction.md`
+
+---
 
 ## Working Style Preferences
-- Give step-by-step Elementor instructions suitable for someone learning Theme Builder
-- Explain *why* we're doing something, not just *how* (helps volunteers understand and maintain)
-- Flag any sections that require plugins or custom CSS upfront
-- Default to simple, maintainable solutions over complex ones
-- When you need to see design details, I'll share screenshots in the conversation
-- Use the GitHub repo for code assets
-- Document major decisions in the repo's decision log
+
+When helping with this project:
+
+### Communication Style:
+- ✅ Give step-by-step Elementor instructions suitable for someone learning Theme Builder
+- ✅ Explain **why** we're doing something, not just **how** (helps volunteers understand and maintain)
+- ✅ Flag any sections that require plugins or custom CSS upfront
+- ✅ Default to simple, maintainable solutions over complex ones
+
+### Approach:
+- ✅ When you need to see design details, ask for screenshots
+- ✅ Reference the GitHub repo for code assets
+- ✅ Document major decisions in the repo's decision log (if one exists)
+- ✅ Always read relevant SKILL.md files before creating documents (docx, pptx, etc.)
+
+### File Creation:
+- ✅ Create actual files (Markdown guides, documentation) - don't just show content
+- ✅ Use clear naming conventions (e.g., `01-setup-guide.md`, `02-next-step.md`)
+- ✅ Place all guides in `/mnt/user-data/outputs/` so user can access them
+
+---
 
 ## Key Pages to Build
-- Home (hero, features, stats, categories)
-- Hot Topics (curated discussion archive with search/filter - TBD on complexity)
-  Note: Hot Topics are curated summaries of popular forum discussions, not live forum content
-- The Forum (explainer pages, join flow)
-- About Us, Contact Us
-- Contribution page for logged in users only
-- 404 and other templates
+
+### Phase 1: Foundation
+- Global Colors setup (Elementor Site Settings)
+- Global Fonts setup (Elementor Site Settings)
+
+### Phase 2: Core Templates
+- **Header** (with conditional navigation - CRITICAL)
+- **Footer**
+- **404 page**
+
+### Phase 3: Content Pages
+- About Us
+- Contact Us
+- The Forum (explainer)
+
+### Phase 4: Membership Flow (HIGH PRIORITY)
+- Join/Signup page with payment form
+- Discourse integration testing
+- End-to-end signup testing
+
+### Phase 5: Hot Topics
+- Single Hot Topic template (Theme Builder)
+- Hot Topics Archive template (Theme Builder)
+- Sample content migration
+
+### Phase 6: Homepage
+- Hero section
+- Dual option cards (Hot Topics vs Forum)
+- Hot Topics grid
+- Stats panel (optional)
+- Category grid (optional)
+
+### Phase 7: Member-Only Features
+- Contribution page (visible only when logged in)
+- Member experience testing
+
+---
 
 ## Reference Materials
-See Project Knowledge for: architecture, content model, Elementor system structure, component library, glossary, and operations documentation.
+
+### Documentation Structure:
+```
+/docs/
+├── guides/               # Step-by-step how-to guides
+│   ├── 00-QUICK-START-GUIDE.md
+│   ├── 01-elementor-global-colors-setup.md
+│   ├── 02-elementor-global-fonts-setup.md
+│   ├── 03-elementor-header-template.md
+│   └── ... (more as created)
+│
+└── reference/           # Reference documentation
+    ├── conditional-navigation.md  # Auth & navigation spec
+    ├── 01-architecture.md         # System architecture
+    ├── 02-environments-and-deployment.md
+    ├── 03-content-model.md
+    ├── 04-elementor-system.md
+    ├── 05-component-library.md    # Component catalog
+    ├── 06-editor-guide.md
+    ├── 07-operations-runbook.md
+    ├── 08-integrations-future.md
+    ├── 09-security-and-governance.md
+    ├── 10-glossary.md
+    ├── IMPLEMENTATION-ROADMAP.md  # Full build sequence
+    └── color-extraction.md        # Technical color reference
+```
+
+### Key Reference Documents:
+- **START HERE**: `00-QUICK-START-GUIDE.md` - Master guide for entire build
+- **conditional-navigation.md** - Complete specification of authentication and navigation requirements
+- **01-architecture.md** - System overview, authentication flow, user states
+- **05-component-library.md** - Complete component catalog with specifications
+- **IMPLEMENTATION-ROADMAP.md** - 10-phase build sequence with time estimates
+- **10-glossary.md** - Definitions of terms used throughout project
+
+---
+
+## Current Progress
+
+### ✅ Completed:
+- Global Colors setup (10 colors defined)
+- Global Fonts setup (7 font styles defined)
+- Documentation updated to reflect conditional navigation requirements
+
+### ⚠️ In Progress:
+- Header Template (Phase 2) - needs conditional button implementation and testing
+
+### 🔜 Next Up:
+- Footer Template
+- Payment Flow setup (HIGH PRIORITY - critical path)
+- Content pages (About, Contact, Forum Explainer)
+
+**See `IMPLEMENTATION-ROADMAP.md` for complete build sequence**
+
+---
+
+## Important Technical Details
+
+### Conditional Visibility Implementation:
+- Use Elementor Pro's built-in visibility conditions
+- Apply to individual widgets (not entire sections when possible)
+- Test both user states after any changes
+- See `conditional-navigation.md` for exact requirements
+
+### Discourse SSO:
+- Authentication handled by WP-Discourse plugin
+- "Go to Forum" button uses SSO (automatic, no second login)
+- Logout must log out of both WordPress AND Discourse
+- Member status stored in WP-Discourse profile fields
+
+### Payment Processing:
+- WP SimplePay plugin + Stripe integration
+- Test mode during development
+- Production mode only after thorough testing
+- tiaa-wpplugin triggers Discourse account creation after payment
+
+### Hot Topics:
+- Use WordPress Posts (not Custom Post Type)
+- "Hot Topics" category for organization
+- Preserve anchor links for SEO
+- Custom fields via ACF (Advanced Custom Fields)
+
+---
+
+## When Creating Guides
+
+### Always Include:
+1. **Why section** - Explain the reasoning
+2. **Prerequisites** - What must be done first
+3. **Step-by-step instructions** - Numbered, detailed
+4. **Screenshots callouts** - Note where screenshots would help
+5. **Testing section** - How to verify it works
+6. **Troubleshooting** - Common issues and solutions
+7. **Notes for future maintainers** - How to update later
+
+### Formatting:
+- Use clear headings (##, ###)
+- Use checkboxes for prerequisites and checklists
+- Use code blocks for technical values (hex codes, URLs, etc.)
+- Use tables for comparisons and reference data
+- Include "What's Next" section at the end
+
+---
+
+## Communication with User
+
+### When Starting Work:
+- Confirm you understand the current phase/task
+- Note which reference documents you'll use
+- Ask clarifying questions if requirements are unclear
+
+### When Providing Guidance:
+- Reference specific step numbers from guides
+- Link to relevant reference docs
+- Highlight potential blockers or risks
+- Suggest testing checkpoints
+
+### When Creating Documentation:
+- Create actual files (not just text in chat)
+- Use consistent naming (01-, 02-, etc.)
+- Place in `/mnt/user-data/outputs/`
+- Provide brief summary of what you created
+
+---
+
+## Critical Success Factors
+
+✅ **Conditional navigation works correctly** (different buttons for logged-in vs logged-out)
+✅ **Payment flow is functional** (new members can join and pay)
+✅ **Discourse SSO works** (members can access forum seamlessly)
+✅ **Hot Topics display correctly** (with preserved anchor links)
+✅ **Mobile responsive** (all pages work on phones)
+✅ **Volunteer maintainable** (non-developers can update content)
+
+**Without these, the site is not ready to launch.**
+
+---
+
+## Questions to Ask if Unclear
+
+Before starting work on a new phase:
+1. Have you reviewed the relevant reference documentation?
+2. Do you understand the user state this affects (anonymous vs. logged-in)?
+3. Are there any dependencies that must be completed first?
+4. What testing will be needed to verify this works?
+5. Will this be maintainable by volunteers?
+
+---
+
+## Repository Structure
+
+```
+tiaa-wpsite-v3/
+├── docs/
+│   ├── guides/           # How-to guides
+│   └── reference/        # Reference documentation
+├── exports/
+│   └── elementor/        # Exported Elementor templates (JSON)
+├── plugins/
+│   └── tiaa-wpplugin/    # Custom plugin code
+└── [other WordPress files]
+```
+
+**What goes in Git:**
+- Documentation (guides, reference docs)
+- Elementor template exports (JSON)
+- Custom plugin code
+- Configuration files
+
+**What stays in WordPress database:**
+- Content (posts, pages)
+- User accounts
+- Plugin settings
+- Media Library uploads
+
+---
+
+## Final Notes
+
+- This is a rebuild of an existing site, not a greenfield project
+- Existing members and content must continue to work
+- Volunteer maintainers are the primary ongoing audience
+- Simplicity and maintainability trump advanced features
+- When in doubt, ask the user before making architectural decisions
+
+**Current phase**: Phase 2 (Core Templates) - Header in progress
+**Next milestone**: Functional header with conditional navigation
+**Critical path item**: Payment flow (Phase 4) - should be tackled early
