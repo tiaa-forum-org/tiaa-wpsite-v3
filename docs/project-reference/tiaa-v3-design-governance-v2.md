@@ -266,3 +266,35 @@ After v3 is live and handed off, add all three GitHub repositories to the Claude
 - Update READMEs for each repo
 - Move clickable cards snippet from `tiaa-wpplugin` to Elementor Forms plugin
 
+---
+# Pinned Decision #8 — SEOPress Pro + Matomo Analytics (Post-MVP)
+
+**Add to:** `docs/project-reference/tiaa-v3-design-governance-v2.md` → Appendix: Pinned Decisions
+
+---
+
+### 📌 Pinned Decision #8 — SEOPress Pro + Matomo Analytics
+
+Consider replacing Yoast SEO with SEOPress Pro and adding Matomo Analytics as a privacy-respecting alternative to Google Analytics.
+
+**Why this matters for TIAA Forum:**
+
+- **Privacy alignment:** Matomo is self-hosted, GDPR-friendly by default, and keeps all visitor data on our own server — no data sent to Google. This aligns with the privacy expectations of an A.A.-related community.
+- **SEOPress Pro integrates with Matomo:** Unlike Yoast and Rank Math (which only support Google Analytics), SEOPress Pro 6.0+ has native Matomo integration that displays stats directly in the WordPress dashboard.
+- **Cost:** SEOPress Pro is $149/year for unlimited sites vs Yoast Premium at $99/year per site.
+
+**Current state:** Yoast SEO Free is installed and working. No analytics platform is currently configured.
+
+**Implementation path (post-MVP):**
+
+1. Install Matomo for WordPress plugin (self-hosted, runs inside WordPress)
+2. Migrate from Yoast to SEOPress using their built-in import tool
+3. Configure SEOPress Pro Matomo integration
+4. Verify sitemap, meta descriptions, and schema markup migrated correctly
+
+**Reference:** SEOPress Matomo integration docs at https://www.seopress.org/features/matomo-cloud-on-premise/
+
+**Decision date:** 2026-03-28  
+**Status:** Deferred to post-MVP
+
+---
