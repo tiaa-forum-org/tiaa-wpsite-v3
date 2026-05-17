@@ -114,7 +114,8 @@ In Discourse (admin must be logged in):
 | Contact Email | Site contact email used in automated messages                                                                                                                                                            |
 | Funding Level | Controls Contribute button colour: `green` (healthy), `yellow` (watch), `red` (critical), `blue` (over reserves)                                                                                         |
 | Discourse URL | Read-only display pulled from WP-Discourse — change it there, not here                                                                                                                                   |
-| Forum Statistics | Member / topic / post counts shown on the homepage stats card. Update manually when Discourse numbers change.                                                                                            |
+| Forum Statistics | Member / topic / post counts shown on the homepage stats card. Update manually when Discourse numbers change. |
+| As of | Date the statistics were last recorded. Displayed via shortcode alongside the counts so visitors know how current the numbers are. |
 
 ### Cookie Domain via wp-config.php (recommended for dev)
 
@@ -126,6 +127,25 @@ define( 'TIAA_COOKIE_DOMAIN', '.tiaa-forum.org' ); // production
 ```
 
 When this constant is present, the Site Settings field is disabled and shows the active value.
+
+### Forum Statistics Shortcodes
+
+The four stat values are available as shortcodes for use in any Elementor text or heading widget:
+
+| Shortcode | Outputs |
+|-----------|---------|
+| `[tiaa_stat field="members"]` | Member count |
+| `[tiaa_stat field="topics"]` | Topic count |
+| `[tiaa_stat field="posts"]` | Post count |
+| `[tiaa_stat field="as_of"]` | "As of" date, formatted using the site's WordPress date format setting |
+
+All four wrap their output in `<span class="tiaa-stats">` so they can be styled consistently. Add a rule to **Elementor → Site Settings → Custom CSS** — for example:
+
+```css
+.tiaa-stats { font-weight: 600; }
+```
+
+Update the numbers and date in the admin screen and the front end updates automatically — no code change needed.
 
 ---
 
