@@ -139,7 +139,7 @@ In Discourse (admin must be logged in):
 
 | Field | What It Does                                                                                                                                                                                             |
 |-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Cookie Domain | Shared cookie domain for WP + Discourse subdomains. Must start with a dot: `.tiaa-forum.org` (prod), `.test.tiaa-forum.org` (staging), `.local` (dev). Can be overridden in `wp-config.php` (see below). |
+| Cookie Domain | Shared cookie domain for WP + Discourse subdomains. Must start with a dot: `.tiaa-forum.org` (prod), `.test.tiaa-forum.org` (staging), `.test` (dev). Can be overridden in `wp-config.php` (see below). |
 | Contact Email | Site contact email used in automated messages                                                                                                                                                            |
 | Funding Level | Controls Contribute button colour: `green` (healthy), `yellow` (watch), `red` (critical), `blue` (over reserves)                                                                                         |
 | Discourse URL | Read-only display pulled from WP-Discourse — change it there, not here                                                                                                                                   |
@@ -295,7 +295,7 @@ Work through this checklist after initial setup:
 
 **Cookie domain issues (SSO not working across subdomains)**
 - Confirm `TIAA_COOKIE_DOMAIN` constant in `wp-config.php` matches the environment
-- For local dev: `.local` — for staging: `.test.tiaa-forum.org` — for production: `.tiaa-forum.org`
+- For local dev: `.test` — for staging: `.test.tiaa-forum.org` — for production: `.tiaa-forum.org`
 - The leading dot is required
 
 **Plugin not loading / PHP error on activation**
