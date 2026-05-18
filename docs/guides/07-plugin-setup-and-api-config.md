@@ -63,6 +63,35 @@ WP-Discourse is the single source of truth for the Discourse URL. The custom plu
 
 Save. The Discourse URL set here is used throughout the site — including the GO TO FORUM button and post-SSO login redirects.
 
+### SSO Provider — WordPress Login Path
+
+**Settings → WP Discourse → SSO Provider**
+
+| Field | Value |
+|-------|-------|
+| Enable SSO Provider | Checked |
+| WordPress Login Path | `/logged-in-landing-page` |
+
+This path is the URL Discourse redirects the user back to after authentication, with `?sso=…&sig=…` appended. It does not need to be a real WordPress page — the plugin intercepts the request before any page renders. The path just needs to be consistent between WP-Discourse and Discourse's own SSO setting (see below).
+
+**Also configure in Discourse:**
+
+Go to **Discourse Admin → Settings → Login** and set:
+
+| Setting | Value |
+|---------|-------|
+| `enable_sso_provider` | On |
+| `sso_url` | `https://tiaa-forum.org/logged-in-landing-page` |
+| `sso_secret` | A strong random secret (must match the WP-Discourse SSO Secret field) |
+
+> **Cache exclusion required:** The `/logged-in-landing-page` path must be excluded from any page caching plugin. A cached response will prevent WordPress from processing the SSO query params, breaking login. Add it to your cache exclusions list alongside `/join`.
+
+**How it works end-to-end:**
+1. User clicks Sign In → redirected to Discourse for authentication
+2. Discourse validates and redirects to `https://tiaa-forum.org/logged-in-landing-page?sso=…&sig=…`
+3. WP-Discourse intercepts at `parse_query`, validates the payload, and logs the user in to WordPress
+4. `tiaa-wpplugin` (`TiaaLoginRedirect`) intercepts at `template_redirect` and immediately redirects to Discourse — the WordPress page never renders, so there is no flash
+
 ---
 
 ## 4. Configure tiaa-wpplugin — Connection Tab
@@ -235,6 +264,9 @@ Work through this checklist after initial setup:
 
 - [ ] All three custom plugins active (Plugins screen shows no errors)
 - [ ] WP-Discourse active and Discourse URL saved
+- [ ] WP-Discourse SSO Provider enabled, WordPress Login Path set to `/logged-in-landing-page`
+- [ ] Discourse `sso_url` set to `https://tiaa-forum.org/logged-in-landing-page`
+- [ ] `/logged-in-landing-page` excluded from page cache
 - [ ] TIAA WP Plugin → Connection tab: Discourse URL, API Key, Username saved
 - [ ] Connection tab Ping returns success
 - [ ] Site Settings tab: Cookie Domain set correctly for the environment
