@@ -132,6 +132,7 @@ The following pages exist in WordPress as stubs (title + placeholder content onl
 2. **Logged-In Member** (authenticated via Discourse SSO)
    - Has paid/joined the forum
    - Sees "GO TO FORUM" (teal) + "CONTRIBUTE" (coral) + "logout" text link in header
+   - WordPress admin bar is hidden (subscribers have no use for it; admins retain it)
 
 ---
 
@@ -246,6 +247,7 @@ All custom code lives in **plugins**, not in Elementor Custom CSS/JS.
 | Code Type | Plugin | Purpose |
 |-----------|--------|---------|
 | Discourse integration, join flow, welcome messages, clickable cards JS | `tiaa-wpplugin` | Core site behaviour and Discourse API |
+| Admin bar suppression for non-admin logged-in users | `tiaa-wpplugin` | Members (subscriber role) get no admin bar; admins retain it. Runs inline in `TiaaBase::initialize_plugin()` on `init` priority 3 — must fire after WP establishes the current user, so `after_setup_theme` is too early |
 | Elementor form action for invite/join flow | `tiaa-elementor-forms-invite-action` | Bridges Elementor Pro form submission to TIAA invite API |
 | Sort Order + Excerpt fields in WP Quick Edit | `tiaa-quick-edit` | Admin utility — no front-end output |
 | Environment config (URLs, email) | `wp-config.php` PHP constants | Per-environment values |
