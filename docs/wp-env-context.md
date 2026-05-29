@@ -88,3 +88,45 @@ cd wp-content/plugins/tiaa-wpplugin/bin
 ./package.sh
 ```
 Saves to `~/tmp/tiaa-backup/`.
+
+---
+
+## Discourse Theme Components
+
+Two Discourse theme components complete the site. Both live on the same Discourse
+instance and are always installed together. Each has its own repo and CLAUDE.md.
+
+| Repo | Component | Installed on |
+|---|---|---|
+| `tiaa-forum-org/TIAA-BrandTheme-v3` | Custom branded nav bar above the native Discourse header | All themes |
+| `tiaa-forum-org/TIAA-DiscourseTheme-v1` | Native Discourse header modifications (login flash, signup link, returning-user detection) | All themes |
+
+### WP ↔ Discourse integration points
+
+**Cookies (WP writes, Discourse reads):**
+- `tiaa_wp_return_url` — Written by `TiaaReturnUrlCookie.php` before SSO redirect.
+  `TIAA-BrandTheme-v3` reads it and updates `.tiaa-home-link` hrefs so the user
+  returns to the exact WP page they came from after login.
+  - Cookie domain: `.tiaa-forum.org` (leading dot — required for cross-subdomain sharing)
+  - Safe-domain allow-list in BrandTheme: `tiaa-forum.org`, `*.tiaa-forum.org`,
+    `discourse-dev.test`, `*.discourse-dev.test`, `wp-test.test`, `*.wp-test.test`
+  - Values whose hostname is not in the allow-list are silently rejected
+
+**Returning-user state (parallel implementations, different platforms):**
+- WP: `tiaa_member` cookie (written by `TiaaMemberCookie.php`); drives
+  `tiaa-returning-member` body class for Elementor visibility conditions
+- Discourse: `localStorage.tiaa_returning_user = "1"` (set by `TIAA-DiscourseTheme-v1`
+  after detecting the SSO callback via `?sso=&sig=` params); drives welcome-back
+  copy in the login flash overlay
+
+**Shared Discourse admin settings (must be kept in sync between both components):**
+- `wp_base_url` — WP origin; used to build nav hrefs and the `/join` signup link.
+  When updating in Discourse admin, set it in **both** components.
+
+**Three-state user model** (drives all front-end decisions on both WP and Discourse):
+
+| State | WP signals | Discourse signals |
+|---|---|---|
+| Anonymous | No WP session, no `tiaa_member` cookie | `html.anon` class |
+| Returning member (logged out) | `tiaa_member` cookie present, no session | `localStorage.tiaa_returning_user = "1"` |
+| Logged-in member | WP session active | Logged-in Discourse session |
