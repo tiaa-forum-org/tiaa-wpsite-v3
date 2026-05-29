@@ -29,6 +29,7 @@ tiaa-wpsite-v3/
 
 ## Usage
 
+- `docs/wp-env-context.md` — umbrella WP environment context (Docker setup, plugin list, code style, REST endpoints); update this when environment-level facts change
 - Reference `docs/` for design specs when implementing features in other repos
 - Assets here may be the source for uploads into Discourse theme components
   or WP media library
