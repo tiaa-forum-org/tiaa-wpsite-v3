@@ -1,5 +1,5 @@
 # tiaa-wpsite-v3 — Claude Code Context
-# Last updated: 2026-05-17
+# Last updated: 2026-05-28
 
 ## What This Is
 
@@ -8,7 +8,8 @@ site assets. Not deployed as an active plugin in production — its value is
 the `docs/` and `assets/` directories, which hold design references and
 exportable assets for the tiaa-forum.org v3 redesign.
 
-Part of the tiaa-v3 project. See umbrella context at `../CLAUDE.md`.
+Part of the tiaa-v3 project. Umbrella WP environment context:
+`docs/wp-env-context.md` (canonical, tracked here).
 
 ---
 
@@ -16,9 +17,12 @@ Part of the tiaa-v3 project. See umbrella context at `../CLAUDE.md`.
 
 ```
 tiaa-wpsite-v3/
-├── tiaa-wpsite-v3.php  ← minimal WP plugin header only (no active code)
-├── docs/               ← design documents, specs, decision records
-└── assets/             ← design assets (images, icons, etc.)
+├── tiaa-wpsite-v3.php          ← minimal WP plugin header only (no active code)
+├── docs/
+│   ├── wp-env-context.md       ← umbrella WP environment context (canonical)
+│   ├── guides/                 ← step-by-step how-to guides (01- through 10-)
+│   └── project-reference/      ← reference documentation
+└── assets/                     ← design assets (images, icons, etc.)
 ```
 
 ---
