@@ -127,8 +127,15 @@ instance and are always installed together. Each has its own repo and CLAUDE.md.
 set cross-subdomain cookies on it. `tiaa_wp_return_url` and `tiaa_member` cannot
 be shared between WP (`wp-test.local`) and Discourse on local dev. Use staging
 (`test.tiaa-forum.org` / `discourse-f2.test.tiaa-forum.org`) for all cookie and
-SSO flow testing. Set `TIAA_COOKIE_DOMAIN` to `.test.tiaa-forum.org` in the
-staging `wp-config.php`.
+SSO flow testing.
+
+**Staging cookie domain:** set `tiaa_cookie_domain` to `.test.tiaa-forum.org` in
+the Site Settings admin tab. The `TIAA_COOKIE_DOMAIN` constant in `wp-config.php`
+is optional — it locks the value to prevent accidental admin changes but is not
+required if the admin setting is correct.
+
+**Confirmed working (2026-05-30):** Full cross-subdomain cookie flow verified on
+staging — both cookies visible on Discourse; BrandTheme return-URL override functional.
 
 **Three-state user model** (drives all front-end decisions on both WP and Discourse):
 
