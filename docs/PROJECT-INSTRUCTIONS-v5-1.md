@@ -1,6 +1,6 @@
 # TIAA Forum Rebuild — Project Instructions for Claude
 
-*Version: 5.1 — Updated 2026-03-17*  
+*Version: 5.1 — Updated 2026-05-30*  
 *Previous version: 5.0 (2026-03-17)*  
 *Changes this version: Repository Structure section rewritten to reflect actual multi-repo layout; version control note added to Tech Stack.*
 
@@ -423,4 +423,4 @@ tiaa-quick-edit/
 
 ---
 
-*Instructions version: 5.1 — Updated 2026-03-17*
+*Instructions version: 5.1 — Updated 2026-05-30*
