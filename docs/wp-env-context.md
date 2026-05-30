@@ -123,6 +123,13 @@ instance and are always installed together. Each has its own repo and CLAUDE.md.
 - `wp_base_url` — WP origin; used to build nav hrefs and the `/join` signup link.
   When updating in Discourse admin, set it in **both** components.
 
+**Local dev limitation:** `.local` is a reserved mDNS domain — browsers refuse to
+set cross-subdomain cookies on it. `tiaa_wp_return_url` and `tiaa_member` cannot
+be shared between WP (`wp-test.local`) and Discourse on local dev. Use staging
+(`test.tiaa-forum.org` / `discourse-f2.test.tiaa-forum.org`) for all cookie and
+SSO flow testing. Set `TIAA_COOKIE_DOMAIN` to `.test.tiaa-forum.org` in the
+staging `wp-config.php`.
+
 **Three-state user model** (drives all front-end decisions on both WP and Discourse):
 
 | State | WP signals | Discourse signals |
