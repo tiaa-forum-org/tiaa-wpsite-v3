@@ -30,6 +30,7 @@ REST API namespace: `tiaa_wpplugin/v1`.
 - `lib/TiaaSiteSettings.php` — "Site Settings" admin tab; cookie domain, contact email, funding level, forum stats, Discourse URL (read from WP-Discourse). Shortcodes: `[tiaa_stat field="members|topics|posts"]`. Also outputs `<script id="tiaa-forum-url">` to set `.tiaa-go-to-forum` button href at runtime.
 - `lib/TiaaReturnUrlCookie.php` — writes `tiaa_wp_return_url` cookie on `.tiaa-sso-trigger` click (short-lived, 1 hr); Discourse brand header reads it to return user to originating WP page after SSO login.
 - `lib/TiaaMemberCookie.php` — writes `tiaa_member` cookie on first logged-in page load (1 yr, persists after logout); adds `tiaa-returning-member` body class when cookie present.
+- `lib/TiaaHooks.php` — adds `tiaa-member` body class when `tiaa_member` cookie present (v0.0.8+); used by tiaa-elementor's `.tiaa-member-only` / `.tiaa-anon-only` CSS utility classes.
 - `lib/TiaaLoginRedirect.php` — hooks `template_redirect` at priority 20; detects Discourse SSO callback via `?sso=&sig=` params and issues 302 redirect to Discourse home, eliminating the logged-in landing page flash.
 - `admin/` — settings pages; each settings group has its own `*Settings.php` class
 
@@ -119,7 +120,8 @@ instance and are always installed together. Each has its own repo and CLAUDE.md.
 
 **Returning-user state (parallel implementations, different platforms):**
 - WP: `tiaa_member` cookie (written by `TiaaMemberCookie.php`); drives
-  `tiaa-returning-member` body class for Elementor visibility conditions
+  `tiaa-returning-member` body class (Elementor visibility conditions) and
+  `tiaa-member` body class (tiaa-elementor `.tiaa-member-only` / `.tiaa-anon-only` CSS classes)
 - Discourse: `localStorage.tiaa_returning_user = "1"` (set by `TIAA-DiscourseTheme-v1`
   after detecting the SSO callback via `?sso=&sig=` params); drives welcome-back
   copy in the login flash overlay
