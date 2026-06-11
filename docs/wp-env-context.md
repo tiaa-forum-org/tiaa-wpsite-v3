@@ -17,7 +17,7 @@ This is a WordPress local development environment running in Docker. Key config:
 
 All active custom development lives under `wp-content/plugins/`. Each plugin is its own git repo.
 
-### tiaa-wpplugin (main plugin) — current version: 0.0.8
+### tiaa-wpplugin (main plugin) — current version: 0.0.9
 WordPress/Discourse integration. Handles user invitations, welcome messages, screened emails, group management, cookie management, and SSO redirect.
 
 REST API namespace: `tiaa_wpplugin/v1`.
