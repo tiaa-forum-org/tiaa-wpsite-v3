@@ -27,7 +27,7 @@ REST API namespace: `tiaa_wpplugin/v1`.
 - `lib/TiaaHooks.php` — registers all REST API routes via `rest_api_init`
 - `lib/Discourse.php` — all Discourse API calls
 - `lib/ScreenEmailsUtil.php` / `lib/WelcomeUtil.php` — feature-specific utilities
-- `lib/TiaaSiteSettings.php` — "Site Settings" admin tab; cookie domain, contact email, funding level, forum stats, Discourse URL (read from WP-Discourse). Shortcodes: `[tiaa_stat field="members|topics|posts"]`. Also outputs `<script id="tiaa-forum-url">` to set `.tiaa-go-to-forum` button href at runtime.
+- `lib/TiaaSiteSettings.php` — "Site Settings" admin tab; cookie domain, contact email, funding level, forum stats, Discourse URL (read from WP-Discourse). Shortcodes: `[tiaa_stat field="members|topics|posts|categories"]` (all numeric values comma-formatted). Also outputs `<script id="tiaa-forum-url">` to set `.tiaa-go-to-forum` button href at runtime.
 - `lib/TiaaReturnUrlCookie.php` — writes `tiaa_wp_return_url` cookie on `.tiaa-sso-trigger` click (short-lived, 1 hr); Discourse brand header reads it to return user to originating WP page after SSO login.
 - `lib/TiaaMemberCookie.php` — writes `tiaa_member` cookie on first logged-in page load (1 yr, persists after logout); adds `tiaa-returning-member` body class when cookie present.
 - `lib/TiaaHooks.php` — adds `tiaa-member` body class when `tiaa_member` cookie present (v0.0.8+); used by tiaa-elementor's `.tiaa-member-only` / `.tiaa-anon-only` CSS utility classes.
