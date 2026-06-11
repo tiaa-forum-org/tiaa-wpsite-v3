@@ -1,6 +1,6 @@
 # WP Test Environment — Claude Code Context
 # Canonical location: tiaa-wpsite-v3/docs/wp-env-context.md
-# Last updated: 2026-05-30
+# Last updated: 2026-06-10
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -50,8 +50,13 @@ Uses post-type-specific hooks (`manage_post_posts_columns`, `manage_page_posts_c
 
 Target categories defined in `TIAA_QE_CATEGORY_SLUGS` constant at top of `tiaa-quick-edit.php`.
 
-### tiaa-elementor-forms-invite-action
-Adds a custom Elementor Pro form action called "TIAA Invite" that POSTs to the plugin's `/invite` REST endpoint. Also makes Elementor Loop Grid cards clickable. JS lives in `assets/js/form-handler.js`.
+### tiaa-elementor — current version: 0.0.9
+Supersedes `tiaa-elementor-forms-invite-action` (deactivate and remove the old plugin before activating this one). Two features:
+
+1. **Discourse invite form action** — custom "TIAA Invite" submit action for Elementor Pro forms; POSTs to tiaa-wpplugin's `/invite` REST endpoint. JS lives in `assets/js/form-handler.js`, enqueued on demand only when a form with the `tiaa` action is on the page.
+2. **Clickable Loop Grid cards** — makes entire Loop Grid card areas clickable site-wide (no Elementor Pro dependency).
+
+Also enqueues `assets/css/tiaa-elementor.css` sitewide, which provides `.tiaa-member-only` and `.tiaa-anon-only` utility classes toggled by the `tiaa-member` body class (set by tiaa-wpplugin when `tiaa_member` cookie is present).
 
 ### tiaa-manage-options-users
 Utility plugin for managing WordPress option settings for users.
