@@ -1,6 +1,6 @@
 # WP Test Environment — Claude Code Context
 # Canonical location: tiaa-wpsite-v3/docs/wp-env-context.md
-# Last updated: 2026-06-10
+# Last updated: 2026-06-25
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
