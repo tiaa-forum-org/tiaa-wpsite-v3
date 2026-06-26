@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIAA Forum v3 — Design System Style Guide · 2026-06-24</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* System Colors */
+    --color-teal:        #31BBA6;
+    --color-coral:       #F37758;
+    --color-navy:        #2B2E60;
+    --color-dark-navy:   #1E2050;
+
+    /* Custom Colors */
+    --color-bg:          #FFFFFF;
+    --color-muted-bg:    #F9FAFB;
+    --color-light-gray-bg: #F8F9FA;
+    --color-very-light-gray: #E9ECEF;
+    --color-border:      #E4E4ED;
+    --color-dark-gray:   #6C757D;
+    --color-coral-dark:  #E06545;
+    --color-error:       #EF4958;
+    --color-blue-element: #C8D5DC;
+    --color-blue-light-bg: #F9FAFD;
+    --color-overlay:     #000000CC;
+
+    /* Typography */
+    --font-main: 'Inter', sans-serif;
+
+    /* Layout */
+    --content-width: 1200px;
+    --page-padding: 40px;
+  }
+
+  body {
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-navy);
+    background: var(--color-muted-bg);
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    background: var(--color-dark-navy);
+    color: white;
+    padding: 48px var(--page-padding);
+  }
+  .page-header-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .page-header p {
+    color: var(--color-blue-element);
+    font-size: 15px;
+  }
+  .page-header .badge {
+    display: inline-block;
+    margin-top: 16px;
+    background: var(--color-teal);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* ── Main layout ── */
+  .page-content {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 40px var(--page-padding) 80px;
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-teal);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-dark-navy);
+    margin-bottom: 4px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--color-dark-gray);
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 16px;
+  }
+
+  /* ── Color Swatches ── */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .color-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: white;
+  }
+  .color-swatch {
+    height: 80px;
+    width: 100%;
+  }
+  .color-swatch.checkerboard {
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    position: relative;
+  }
+  .color-swatch.checkerboard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--swatch-color);
+  }
+  .color-meta {
+    padding: 10px 12px;
+  }
+  .color-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 2px;
+  }
+  .color-hex {
+    font-size: 12px;
+    color: var(--color-dark-gray);
+    font-family: 'Courier New', monospace;
+  }
+  .color-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 100px;
+    background: var(--color-light-gray-bg);
+    color: var(--color-dark-gray);
+  }
+  .color-tag.system { background: #e0f5f1; color: #1a7a68; }
+
+  /* ── Typography Specimens ── */
+  .type-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  .type-table th {
+    background: var(--color-light-gray-bg);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-dark-gray);
+    padding: 10px 16px;
+    text-align: left;
+  }
+  .type-table td {
+    padding: 16px;
+    border-top: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+  .type-table tr:first-child td { border-top: none; }
+  .type-name { font-size: 13px; font-weight: 600; color: var(--color-navy); }
+  .type-meta { font-size: 12px; color: var(--color-dark-gray); margin-top: 2px; }
+  .type-responsive {
+    font-size: 11px;
+    color: var(--color-dark-gray);
+    background: var(--color-light-gray-bg);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 3px;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* Live type specimens */
+  .specimen-body    { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--color-navy); }
+  .specimen-h1      { font-family: 'Inter', sans-serif; font-size: 48px; font-weight: 700; line-height: 1.2; color: var(--color-dark-navy); }
+  .specimen-h2      { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 600; line-height: 1.5; color: var(--color-teal); }
+  .specimen-h3      { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500; line-height: 1.4; color: var(--color-navy); }
+  .specimen-h4      { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; line-height: 1.2; text-transform: capitalize; color: var(--color-teal); }
+  .specimen-btn     { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; line-height: 1; }
+  .specimen-caption { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; color: var(--color-dark-gray); }
+  .specimen-display { font-family: 'Inter', sans-serif; font-size: 60px; font-weight: 700; line-height: 1.1; color: var(--color-dark-navy); }
+
+  /* ── Site Defaults ── */
+  .defaults-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .default-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .default-card h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-dark-gray);
+    margin-bottom: 12px;
+  }
+  .default-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 13px;
+  }
+  .default-row:last-child { border-bottom: none; }
+  .default-label { color: var(--color-dark-gray); }
+  .default-value { font-weight: 600; color: var(--color-navy); font-family: 'Courier New', monospace; font-size: 12px; }
+  .color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* ── Buttons ── */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    padding: 24px;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .button-row.dark { background: var(--color-dark-navy); }
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 14px 28px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn-teal    { background: var(--color-teal);      color: white; }
+  .btn-coral   { background: var(--color-coral);     color: white; }
+  .btn-navy    { background: var(--color-navy);      color: white; }
+  .btn-outline { background: transparent; color: var(--color-teal); border: 2px solid var(--color-teal); }
+  .btn-outline-white { background: transparent; color: white; border: 2px solid white; }
+  .btn-sm { font-size: 14px; padding: 10px 20px; }
+  .btn-label { font-size: 11px; color: var(--color-dark-gray); margin-top: 6px; text-align: center; }
+
+  /* ── Notes ── */
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #78350f;
+    margin-top: 16px;
+  }
+  .note strong { font-weight: 700; }
+
+  /* ── Heading colors panel ── */
+  .heading-colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .heading-color-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .heading-color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .heading-color-info { font-size: 13px; }
+  .heading-color-info strong { display: block; color: var(--color-navy); font-weight: 600; margin-bottom: 2px; }
+  .heading-color-info span { color: var(--color-dark-gray); font-family: 'Courier New', monospace; font-size: 12px; }
+
+  /* ── Breakpoints ── */
+  .breakpoint-bar {
+    display: flex;
+    gap: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    font-size: 13px;
+  }
+  .bp-segment {
+    padding: 16px 20px;
+    flex: 1;
+    text-align: center;
+  }
+  .bp-segment:not(:last-child) { border-right: 1px solid var(--color-border); }
+  .bp-segment.mobile { background: #fef3f2; }
+  .bp-segment.tablet { background: #fffbeb; }
+  .bp-segment.desktop { background: #f0fdf4; }
+  .bp-name { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .bp-range { font-size: 13px; color: var(--color-dark-gray); font-family: 'Courier New', monospace; }
+  .bp-mobile-name  { color: #dc2626; }
+  .bp-tablet-name  { color: #d97706; }
+  .bp-desktop-name { color: #16a34a; }
+
+  /* ── Custom code note ── */
+  .code-block {
+    background: var(--color-dark-navy);
+    color: #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .code-block .comment { color: #64748b; }
+
+  /* ── Footer ── */
+  .page-footer {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--page-padding) 40px;
+    font-size: 13px;
+    color: var(--color-dark-gray);
+    border-top: 1px solid var(--color-border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>TIAA Forum v3 — Design System</h1>
+    <p>Style guide generated from Elementor Kit export · tiaa-wpsite-v3</p>
+    <span class="badge">Internal Reference</span>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <!-- ═══════════════════════════════════════════
+       1. COLORS — SYSTEM
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">01 — Colors</div>
+    <div class="section-title">System Colors</div>
+    <p class="section-desc">Defined in Elementor → Site Settings → Global Colors. These four are the primary palette and map to Elementor's built-in Primary / Secondary / Text / Accent slots.</p>
+
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#31BBA6;"></div>
+        <div class="color-meta">
+          <div class="color-name">Primary (Teal)</div>
+          <div class="color-hex">#31BBA6</div>
+          <span class="color-tag system">System · Primary</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F37758;"></div>
+        <div class="color-meta">
+          <div class="color-name">Secondary (Coral)</div>
+          <div class="color-hex">#F37758</div>
+          <span class="color-tag system">System · Secondary</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#2B2E60;"></div>
+        <div class="color-meta">
+          <div class="color-name">Body Text (Navy)</div>
+          <div class="color-hex">#2B2E60</div>
+          <span class="color-tag system">System · Text</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#1E2050;"></div>
+        <div class="color-meta">
+          <div class="color-name">Accent (Dark Navy)</div>
+          <div class="color-hex">#1E2050</div>
+          <span class="color-tag system">System · Accent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       2. COLORS — CUSTOM
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">01 — Colors</div>
+    <div class="section-title">Custom Colors</div>
+    <p class="section-desc">Additional colors defined as custom entries in the Global Colors palette.</p>
+
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#FFFFFF; border-bottom:1px solid #E4E4ED;"></div>
+        <div class="color-meta">
+          <div class="color-name">Background</div>
+          <div class="color-hex">#FFFFFF</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F9FAFB; border-bottom:1px solid #E4E4ED;"></div>
+        <div class="color-meta">
+          <div class="color-name">Muted Background</div>
+          <div class="color-hex">#F9FAFB</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F8F9FA; border-bottom:1px solid #E4E4ED;"></div>
+        <div class="color-meta">
+          <div class="color-name">Light Gray BG</div>
+          <div class="color-hex">#F8F9FA</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E9ECEF;"></div>
+        <div class="color-meta">
+          <div class="color-name">Very Light Gray</div>
+          <div class="color-hex">#E9ECEF</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E4E4ED;"></div>
+        <div class="color-meta">
+          <div class="color-name">Border</div>
+          <div class="color-hex">#E4E4ED</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#6C757D;"></div>
+        <div class="color-meta">
+          <div class="color-name">Dark Gray</div>
+          <div class="color-hex">#6C757D</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E06545;"></div>
+        <div class="color-meta">
+          <div class="color-name">Coral Dark</div>
+          <div class="color-hex">#E06545</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#EF4958;"></div>
+        <div class="color-meta">
+          <div class="color-name">Error</div>
+          <div class="color-hex">#EF4958</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#C8D5DC;"></div>
+        <div class="color-meta">
+          <div class="color-name">Blue Element</div>
+          <div class="color-hex">#C8D5DC</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F9FAFD; border-bottom:1px solid #E4E4ED;"></div>
+        <div class="color-meta">
+          <div class="color-name">Blue Light BG</div>
+          <div class="color-hex">#F9FAFD</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch checkerboard" style="--swatch-color: #000000CC;"></div>
+        <div class="color-meta">
+          <div class="color-name">Overlay BG</div>
+          <div class="color-hex">#000000CC (80% black)</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch checkerboard" style="--swatch-color: transparent;"></div>
+        <div class="color-meta">
+          <div class="color-name">Full Transparency</div>
+          <div class="color-hex">transparent</div>
+          <span class="color-tag">Custom</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       3. TYPOGRAPHY
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">02 — Typography</div>
+    <div class="section-title">System Typography (Inter)</div>
+    <p class="section-desc">Defined in Elementor → Site Settings → Global Fonts. These four map to Elementor's built-in typography slots. All use the Inter font family.</p>
+
+    <table class="type-table">
+      <thead>
+        <tr>
+          <th style="width:30%">Name / Role</th>
+          <th style="width:40%">Specimen</th>
+          <th>Specs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="type-name">Body Text</div>
+            <div class="type-meta">System · Primary<br>Paragraphs, descriptions, general content</div>
+          </td>
+          <td><span class="specimen-body">The quick brown fox jumps over the lazy dog.</span></td>
+          <td>
+            Inter 400<br>
+            <span class="type-responsive">16px / 16px / 16px</span><br>
+            <span class="type-meta">line-height 1.6</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">H1</div>
+            <div class="type-meta">System · Secondary<br>Page titles, hero headlines</div>
+          </td>
+          <td><span class="specimen-h1">Forum</span></td>
+          <td>
+            Inter 700<br>
+            <span class="type-responsive">48px / 36px / 30px</span><br>
+            <span class="type-meta">line-height 1.2 · color: Dark Navy</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">H2</div>
+            <div class="type-meta">System · Text<br>Section headings</div>
+          </td>
+          <td><span class="specimen-h2">Section Heading</span></td>
+          <td>
+            Inter 600<br>
+            <span class="type-responsive">30px / 24px / 22px</span><br>
+            <span class="type-meta">line-height 1.5 · color: Teal</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">H3</div>
+            <div class="type-meta">System · Accent<br>Card headings, subheadings</div>
+          </td>
+          <td><span class="specimen-h3">Card or Block Title</span></td>
+          <td>
+            Inter 500<br>
+            <span class="type-responsive">20px / 18px / 16px</span><br>
+            <span class="type-meta">line-height 1.4</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       4. TYPOGRAPHY — CUSTOM
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">02 — Typography</div>
+    <div class="section-title">Custom Typography Styles</div>
+    <p class="section-desc">Additional named font styles. Note: several Poppins entries appear to be kit defaults that carried over — verify whether these are actively used in the build.</p>
+
+    <table class="type-table">
+      <thead>
+        <tr>
+          <th style="width:30%">Name</th>
+          <th style="width:40%">Specimen</th>
+          <th>Specs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="type-name">H4</div>
+            <div class="type-meta">Inter · Capitalize · Teal</div>
+          </td>
+          <td><span class="specimen-h4">Category Label</span></td>
+          <td>
+            Inter 600<br>
+            <span class="type-responsive">18px / — / 18px</span><br>
+            <span class="type-meta">line-height 1.2 · capitalize · color: Teal</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">Button Text</div>
+            <div class="type-meta">Inter</div>
+          </td>
+          <td><span class="specimen-btn">JOIN THE FORUM</span></td>
+          <td>
+            Inter 600<br>
+            <span class="type-responsive">16px / 14px / 14px</span><br>
+            <span class="type-meta">line-height 1</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">Caption</div>
+            <div class="type-meta">Inter · Small text, meta info</div>
+          </td>
+          <td><span class="specimen-caption">Posted June 24, 2026 · 3 min read</span></td>
+          <td>
+            Inter 400<br>
+            <span class="type-responsive">14px / 12px / 12px</span><br>
+            <span class="type-meta">color: Dark Gray</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="type-name">Display Large</div>
+            <div class="type-meta">Inter · Hero super-headlines</div>
+          </td>
+          <td><span class="specimen-display" style="font-size:48px;">TIAA</span></td>
+          <td>
+            Inter 700<br>
+            <span class="type-responsive">60px / 48px / 36px</span><br>
+            <span class="type-meta">line-height 1.1 · color: Dark Navy</span>
+          </td>
+        </tr>
+        <tr style="background:#fffbeb;">
+          <td>
+            <div class="type-name">Hero Headline ⚠️</div>
+            <div class="type-meta">Poppins · Kit default?</div>
+          </td>
+          <td><span style="font-family:sans-serif;font-size:24px;font-weight:600;">Very Large Display</span></td>
+          <td>
+            Poppins 600<br>
+            <span class="type-responsive">85px / 65px / 48px</span><br>
+            <span class="type-meta">Verify if in active use</span>
+          </td>
+        </tr>
+        <tr style="background:#fffbeb;">
+          <td>
+            <div class="type-name">404 Title ⚠️</div>
+            <div class="type-meta">Poppins · Kit default?</div>
+          </td>
+          <td><span style="font-family:sans-serif;font-size:36px;font-weight:600;">404</span></td>
+          <td>
+            Poppins 600<br>
+            <span class="type-responsive">200px / 145px / 100px</span><br>
+            <span class="type-meta">Verify if in active use</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>⚠️ Poppins entries:</strong> Box Title, Subtitle, Special Title, Accent Text Underline, Hero Headline, 404 Title, Body Text Italic Capitalize — these appear to be carried over from an Elementor starter kit and may not be used in the TIAA build. Verify before relying on them or consider removing to keep the system clean.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       5. HEADING & LINK COLORS
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">03 — Site Defaults</div>
+    <div class="section-title">Heading & Link Colors</div>
+    <p class="section-desc">Set in Elementor → Site Settings → Theme Style. These apply globally to heading tags and body links.</p>
+
+    <div class="heading-colors-grid">
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#1E2050;"></div>
+        <div class="heading-color-info">
+          <strong>H1 color</strong>
+          <span>#1E2050 (Dark Navy)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#31BBA6;"></div>
+        <div class="heading-color-info">
+          <strong>H2 color</strong>
+          <span>#31BBA6 (Teal)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#2B2E60;"></div>
+        <div class="heading-color-info">
+          <strong>H3 color</strong>
+          <span>#2B2E60 (Navy) — inferred</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#31BBA6;"></div>
+        <div class="heading-color-info">
+          <strong>H4 color</strong>
+          <span>#31BBA6 (Teal)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#1E2050;"></div>
+        <div class="heading-color-info">
+          <strong>Link (default)</strong>
+          <span>#1E2050 (Dark Navy)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#31BBA6;"></div>
+        <div class="heading-color-info">
+          <strong>Link (hover)</strong>
+          <span>#31BBA6 (Teal)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#2B2E60;"></div>
+        <div class="heading-color-info">
+          <strong>Body text color</strong>
+          <span>#2B2E60 (Navy)</span>
+        </div>
+      </div>
+      <div class="heading-color-card">
+        <div class="heading-color-swatch" style="background:#FFFFFF; border:1px solid #E4E4ED;"></div>
+        <div class="heading-color-info">
+          <strong>Body background</strong>
+          <span>#FFFFFF</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       6. BUTTONS
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">04 — Components</div>
+    <div class="section-title">Buttons</div>
+    <p class="section-desc">Border radius: 5px (set in Site Settings → Buttons). Padding is set per-button in Elementor. Font: Inter 600, 16px.</p>
+
+    <div class="button-row">
+      <div>
+        <a class="btn btn-teal">Go to Forum</a>
+        <div class="btn-label">Teal · Primary action</div>
+      </div>
+      <div>
+        <a class="btn btn-coral">Join / Sign In</a>
+        <div class="btn-label">Coral · Secondary action</div>
+      </div>
+      <div>
+        <a class="btn btn-navy">Contribute</a>
+        <div class="btn-label">Navy · Tertiary</div>
+      </div>
+      <div>
+        <a class="btn btn-outline">Learn More</a>
+        <div class="btn-label">Outline Teal</div>
+      </div>
+    </div>
+
+    <div class="button-row dark">
+      <div>
+        <a class="btn btn-teal">Go to Forum</a>
+        <div class="btn-label" style="color:#C8D5DC;">On dark background</div>
+      </div>
+      <div>
+        <a class="btn btn-coral">Join / Sign In</a>
+        <div class="btn-label" style="color:#C8D5DC;">On dark background</div>
+      </div>
+      <div>
+        <a class="btn btn-outline-white">Learn More</a>
+        <div class="btn-label" style="color:#C8D5DC;">Outline White</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       7. LAYOUT & BREAKPOINTS
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">05 — Layout</div>
+    <div class="section-title">Content Width & Breakpoints</div>
+    <p class="section-desc">Set in Elementor → Site Settings → Layout.</p>
+
+    <div class="defaults-grid" style="margin-bottom:20px;">
+      <div class="default-card">
+        <h4>Layout</h4>
+        <div class="default-row">
+          <span class="default-label">Content width</span>
+          <span class="default-value">1200px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Container padding</span>
+          <span class="default-value">0px all sides</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Paragraph spacing</span>
+          <span class="default-value">16px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Button border-radius</span>
+          <span class="default-value">5px</span>
+        </div>
+      </div>
+      <div class="default-card">
+        <h4>Header (Hello theme defaults)</h4>
+        <div class="default-row">
+          <span class="default-label">Background</span>
+          <span class="default-value">#FFFFFF</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Width</span>
+          <span class="default-value">full-width</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Gap (desktop)</span>
+          <span class="default-value">8%</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Menu color</span>
+          <span class="default-value">#31BBA6 (Teal)</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Logo width</span>
+          <span class="default-value">54px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Mobile menu toggle</span>
+          <span class="default-value">#1E2050 (Dark Navy)</span>
+        </div>
+      </div>
+      <div class="default-card">
+        <h4>Footer (Hello theme defaults)</h4>
+        <div class="default-row">
+          <span class="default-label">Background</span>
+          <span class="default-value">#1E2050 (Dark Navy)</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Width</span>
+          <span class="default-value">full-width</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Layout</span>
+          <span class="default-value">stacked</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Copyright color</span>
+          <span class="default-value">#F37758 (Coral)</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Copyright size</span>
+          <span class="default-value">30px / 24px / 22px</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="breakpoint-bar">
+      <div class="bp-segment mobile">
+        <div class="bp-name bp-mobile-name">Mobile</div>
+        <div class="bp-range">&lt; 768px</div>
+      </div>
+      <div class="bp-segment tablet">
+        <div class="bp-name bp-tablet-name">Tablet</div>
+        <div class="bp-range">768px – 1024px</div>
+      </div>
+      <div class="bp-segment desktop">
+        <div class="bp-name bp-desktop-name">Desktop</div>
+        <div class="bp-range">≥ 1025px</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--color-dark-gray);margin-top:8px;">Breakpoints: <code>viewport_md: 768</code> · <code>viewport_lg: 1025</code> — set in Elementor Site Settings → Layout → Breakpoints</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       8. NOTES FOR MAINTAINERS
+  ════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">06 — Notes</div>
+    <div class="section-title">For Maintainers</div>
+    <p class="section-desc">Key rules for keeping the design system consistent.</p>
+
+    <div class="defaults-grid">
+      <div class="default-card">
+        <h4>Where to change colors</h4>
+        <div class="default-row" style="display:block;padding:8px 0;">
+          <span class="default-label">Elementor → Site Settings → Global Colors. Changes here propagate everywhere the global is referenced. Never hardcode hex values in widgets if a global color exists.</span>
+        </div>
+      </div>
+      <div class="default-card">
+        <h4>Where to change fonts</h4>
+        <div class="default-row" style="display:block;padding:8px 0;">
+          <span class="default-label">Elementor → Site Settings → Global Fonts. Set responsive sizes here (desktop/tablet/mobile), not per-widget. Only use per-widget overrides for one-off exceptions.</span>
+        </div>
+      </div>
+      <div class="default-card">
+        <h4>Where shared CSS lives</h4>
+        <div class="default-row" style="display:block;padding:8px 0;">
+          <span class="default-label">tiaa-elementor plugin → assets/css/tiaa-elementor.css. If a class or rule is used on more than one element or page, it belongs here — not in Elementor page CSS or widget CSS.</span>
+        </div>
+      </div>
+      <div class="default-card">
+        <h4>Content width standards</h4>
+        <div class="default-row">
+          <span class="default-label">Single-column</span>
+          <span class="default-value">760px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Two-column</span>
+          <span class="default-value">960px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Full layout max</span>
+          <span class="default-value">1200px</span>
+        </div>
+        <div class="default-row">
+          <span class="default-label">Section padding</span>
+          <span class="default-value">80px top/bottom</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-content -->
+
+<div class="page-footer">
+  <span>TIAA Forum v3 Design System · Generated from Elementor Kit export · Last updated 2026-06-24</span>
+  <span>Internal reference only · tiaa-wpsite-v3 / docs/style-guide · 2026-06-24</span>
+</div>
+
+</body>
+</html>

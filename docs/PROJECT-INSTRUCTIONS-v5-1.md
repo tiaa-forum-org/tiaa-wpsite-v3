@@ -327,6 +327,14 @@ document.querySelectorAll('.e-loop-item').forEach(function(card) {
 
 ---
 
+## Style Guide Tool (docs/style-guide/)
+
+- `index.php` — document library; auto-lists dated style guide exports; served via web-root symlink outside WordPress
+- `README.md` — generation workflow: export Elementor Kit → upload to Claude → save output as `tiaa-style-guide-YYYY-MM-DD/index.html` → commit
+- `tiaa-style-guide-YYYY-MM-DD/` — one self-contained HTML export per date; open directly in a browser
+
+---
+
 ## Reference Documents (in docs/project-reference/)
 
 - `01-architecture.md` — System overview, authentication flow, user states
@@ -387,11 +395,23 @@ Each plugin and the site documentation live in **separate GitHub repositories** 
 ```
 tiaa-wpsite-v3/
 ├── docs/
+│   ├── wp-env-context.md     # Umbrella WP environment context (canonical)
 │   ├── guides/               # Step-by-step how-to guides (01- through 10-)
-│   └── project-reference/    # Reference documentation
+│   ├── project-reference/    # Reference documentation
+│   └── style-guide/          # Document library + dated style guide HTML exports
+│       ├── index.php         # Auto-listing document library (served as static file via symlink)
+│       ├── README.md         # Generation workflow for new style guide exports
+│       └── tiaa-style-guide-YYYY-MM-DD/  # One subdirectory per export, containing index.html
 └── exports/
     └── elementor/            # Exported Elementor templates (JSON) — export before deployments
 ```
+
+**Style guide tool:** `docs/style-guide/index.php` is a self-contained document library served
+outside WordPress via a symlink at the web root. It auto-discovers and lists dated
+`tiaa-style-guide-YYYY-MM-DD/` subdirectories. To generate a new style guide, export an
+Elementor Kit from WordPress admin → Elementor → Tools → Export Kit, upload the zip to Claude
+with the prompt *"Generate an updated style guide from this kit export"*, save the output as
+`tiaa-style-guide-YYYY-MM-DD/index.html`, and commit to this directory.
 
 ### tiaa-wpplugin
 ```

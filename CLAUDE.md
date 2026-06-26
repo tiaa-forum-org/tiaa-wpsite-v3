@@ -21,7 +21,8 @@ tiaa-wpsite-v3/
 ├── docs/
 │   ├── wp-env-context.md       ← umbrella WP environment context (canonical)
 │   ├── guides/                 ← step-by-step how-to guides (01- through 10-)
-│   └── project-reference/      ← reference documentation
+│   ├── project-reference/      ← reference documentation
+│   └── style-guide/            ← auto-listed document library (index.php) + dated style guide exports
 └── assets/                     ← design assets (images, icons, etc.)
 ```
 
@@ -30,6 +31,7 @@ tiaa-wpsite-v3/
 ## Usage
 
 - `docs/wp-env-context.md` — umbrella WP environment context (Docker setup, plugin list, code style, REST endpoints); update this when environment-level facts change
+- `docs/style-guide/` — document library served as static files outside WP (symlinked at the web root). `index.php` auto-lists dated subdirectories. To add a new style guide: drop a `tiaa-style-guide-YYYY-MM-DD/` subdirectory containing `index.html` and commit. See `docs/style-guide/README.md` for the generation workflow.
 - Reference `docs/` for design specs when implementing features in other repos
 - Assets here may be the source for uploads into Discourse theme components
   or WP media library

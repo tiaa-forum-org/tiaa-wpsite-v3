@@ -2,7 +2,7 @@
 * Plugin Name: TIAA WordPress Site v3
 * Description: A WordPress plugin for developing and managing the TIAA Forum website.
 * Plugin URI:  https://tiaa-forum.org/
-* Version:     0.0.1
+* Version:     0.0.2
 * Author:      Lew Grothe, TIAA Admin Team
 * Author URI:  https://tiaa-forum.org
 *
