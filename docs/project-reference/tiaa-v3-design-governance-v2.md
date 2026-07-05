@@ -230,15 +230,80 @@ Environment-specific URLs (Discourse URL, etc.) remain in `wp-config.php` as PHP
 
 ---
 
-### 📌 Pinned Decision #4 — Header Full Redesign
+# Pinned Decision #4 — Header Redesign (Updated)
 
-The current header is a functional MVP implementation with button text reduced 2pt as a temporary fix for spacing. A full header redesign is planned before public launch, including:
+**Status:** Updated July 2026  
+**Supersedes:** Previous Pinned Decision #4 text in `tiaa-v3-design-governance-v2.md`
 
-- Proper button sizing and spacing
-- Possible hamburger/responsive menu for mobile
-- Refined conditional navigation layout
+---
 
-**Important:** Preserve all existing Elementor Pro display conditions when rebuilding the header.
+## Decision: Two Separate Header Templates (Desktop vs. Mobile)
+
+After iterating on the existing single header template, the team evaluated three approaches to solving mobile header layout:
+
+1. Single template with responsive show/hide per breakpoint
+2. Single template with two-row layout (top row scrolls away, nav row sticky)
+3. **Two separate Theme Builder header templates — one for desktop/tablet, one for mobile** ✅ Selected
+
+---
+
+## Rationale
+
+### Why not Option 1 (single template, responsive show/hide)?
+The existing header has proven difficult to make work correctly across both desktop and mobile within one template. Elementor's responsive controls for flex direction, Content Width (Boxed vs. Full Width), and container nesting interact in ways that require complex overrides. A single template serving both layouts becomes fragile and hard for volunteers to maintain.
+
+Additionally, Elementor's responsive show/hide removes elements from flow entirely — which works, but means hidden elements are still downloaded (CSS switches them, not server logic).
+
+### Why not Option 2 (scroll-away top row)?
+A scroll-away top row (buttons scroll off, logo/nav stays sticky) is architecturally cleaner in a single template — but Elementor's sticky setting applies to the whole header template container, not individual child containers natively. Implementing it requires CSS `position: sticky` on a child container, which gets fragile across breakpoints and is difficult for volunteers to understand or debug.
+
+This approach also conflates two problems: the layout problem (mobile vs. desktop structure) and the scroll behavior problem. Solving both in one template increases complexity.
+
+### Why Option 3 (two templates)?
+- Each template is simple and purpose-built for its context — no responsive overrides fighting each other
+- Volunteers can edit either template independently without risking the other
+- Elementor Theme Builder supports device-based display conditions natively at the server level (user-agent detection), so only the appropriate template is rendered in the HTML — **both templates are not downloaded simultaneously**
+- Mobile header can be built from scratch with the correct structure rather than fighting inherited desktop layout decisions
+
+---
+
+## Implementation Notes
+
+### Display Conditions
+- **Desktop/Tablet header template**: Set display condition to exclude mobile breakpoint
+- **Mobile header template**: Set display condition to mobile only
+- Elementor evaluates device conditions server-side (user-agent), not via CSS media query — the non-matching template is not rendered in the HTML
+
+### Caching Consideration ⚠️
+If page caching is active (WP Rocket, nginx caching, CDN), the cache **must be configured to cache per device type** or to bypass caching for the header. Otherwise mobile users may receive the desktop header from cache. Verify this before public launch.
+
+### Shared Maintenance Items
+Both templates share the same conditional navigation logic (logged in / logged out display conditions on buttons). Any change to button links, text, or display conditions must be applied to **both templates**. This is the primary maintenance cost of the two-template approach — acceptable given how infrequently header content changes.
+
+### Preserve Display Conditions
+When rebuilding or editing either template, preserve all Elementor Pro display conditions on individual button widgets:
+
+| Element | Logged Out | Logged In |
+|---------|-----------|-----------|
+| JOIN/SIGN IN (coral) | Visible | Hidden |
+| GO TO FORUM (teal) | Hidden | Visible |
+| CONTRIBUTE (coral) | Hidden | Visible |
+| logout (text link) | Hidden | Visible |
+
+---
+
+## What Was Deferred from This Decision
+
+- **Scroll-away behavior** (top row scrolls off, nav stays sticky): Still a valid future enhancement. Easiest to implement in the desktop template once the two-template structure is stable. Requires either CSS `position: sticky` on a child container or a small JS scroll listener. Flagged for post-MVP header refinement.
+- **Different logo file on mobile vs. desktop**: Two-template approach makes this trivial — each template simply uses its own Image widget pointing to the appropriate logo file. No show/hide logic needed.
+
+---
+
+## Change Log
+
+| Date | Who | What |
+|------|-----|------|
+| July 2026 | lewg | Updated from single-template MVP plan to two-template approach; documented rationale and implementation notes |
 
 ---
 
