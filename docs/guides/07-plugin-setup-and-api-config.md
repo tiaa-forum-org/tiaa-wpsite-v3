@@ -2,7 +2,7 @@
 
 **For:** Developers setting up a new local or staging environment
 **Covers:** tiaa-wpplugin, tiaa-elementor, tiaa-quick-edit, WP-Discourse, and Discourse theme components
-**Last updated:** 2026-05-21
+**Last updated:** 2026-07-23
 
 ---
 
@@ -479,11 +479,15 @@ Side effect: Discourse credentials must be re-entered in WelcomeSettings if they
 blanked. The `validator()` method in `FormHandler` needs a deeper audit.
 
 ### TiaaLoginRedirect
-`TiaaLoginRedirect.php` is a no-op in SSO Client mode. It was written when WP was the SSO
-provider and intercepted the Discourse callback at `template_redirect`. WP-Discourse SSO
-Client now handles the callback at `init` (priority 5) and redirects before
-`template_redirect` ever fires, so this class never activates. Safe to remove if the
-provider model never returns.
+`TiaaLoginRedirect.php` was originally written when WP was the SSO provider and
+intercepted the Discourse callback at `template_redirect`. WP-Discourse SSO Client now
+handles a *successful* callback at `init` (priority 5) and redirects before
+`template_redirect` ever fires, so this class stays inert on that path. But on a
+*failed* callback, WP-Discourse only logs the error and returns without redirecting —
+so `template_redirect` still fires. As of v0.0.11, this class detects that case and
+redirects to the Discourse login page with `?sso_failed=1` for the brand header to
+surface an error notice, and registers Discourse's host on `allowed_redirect_hosts`
+(required for `wp_safe_redirect()` to permit the redirect).
 
 ### Logout sync
 Bidirectional logout (logging out of one system logs out of the other) requires

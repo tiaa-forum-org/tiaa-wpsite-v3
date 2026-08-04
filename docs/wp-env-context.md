@@ -1,6 +1,6 @@
 # WP Test Environment — Claude Code Context
 # Canonical location: tiaa-wpsite-v3/docs/wp-env-context.md
-# Last updated: 2026-06-25
+# Last updated: 2026-07-23
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -17,7 +17,7 @@ This is a WordPress local development environment running in Docker. Key config:
 
 All active custom development lives under `wp-content/plugins/`. Each plugin is its own git repo.
 
-### tiaa-wpplugin (main plugin) — current version: 0.0.9
+### tiaa-wpplugin (main plugin) — current version: 0.0.11
 WordPress/Discourse integration. Handles user invitations, welcome messages, screened emails, group management, cookie management, and SSO redirect.
 
 REST API namespace: `tiaa_wpplugin/v1`.
@@ -31,7 +31,7 @@ REST API namespace: `tiaa_wpplugin/v1`.
 - `lib/TiaaReturnUrlCookie.php` — writes `tiaa_wp_return_url` cookie on `.tiaa-sso-trigger` click (short-lived, 1 hr); Discourse brand header reads it to return user to originating WP page after SSO login.
 - `lib/TiaaMemberCookie.php` — writes `tiaa_member` cookie on first logged-in page load (1 yr, persists after logout); adds `tiaa-returning-member` body class when cookie present.
 - `lib/TiaaHooks.php` — adds `tiaa-member` body class when `tiaa_member` cookie present (v0.0.8+); used by tiaa-elementor's `.tiaa-member-only` / `.tiaa-anon-only` CSS utility classes.
-- `lib/TiaaLoginRedirect.php` — hooks `template_redirect` at priority 20; detects Discourse SSO callback via `?sso=&sig=` params and issues 302 redirect to Discourse home, eliminating the logged-in landing page flash.
+- `lib/TiaaLoginRedirect.php` — hooks `template_redirect` at priority 20; detects Discourse SSO callback via `?sso=&sig=` params. On success (user logged in), 302 redirects to Discourse home, eliminating the logged-in landing page flash. On failure (v0.0.11+), redirects to Discourse login with `?sso_failed=1` for the brand header to surface an error notice. Also registers Discourse's host on `allowed_redirect_hosts` (required for `wp_safe_redirect()` to permit either redirect).
 - `admin/` — settings pages; each settings group has its own `*Settings.php` class
 
 PHP namespace: `TIAAPlugin\lib`. Vendor deps (only `analog/analog`) are prefixed under `TIAAPlugin` and committed to `vendor_prefixed/` — do not use the standard `vendor/` directory for this plugin.
@@ -51,7 +51,7 @@ Uses post-type-specific hooks (`manage_post_posts_columns`, `manage_page_posts_c
 
 Target categories defined in `TIAA_QE_CATEGORY_SLUGS` constant at top of `tiaa-quick-edit.php`.
 
-### tiaa-elementor — current version: 0.0.9
+### tiaa-elementor — current version: 0.0.12
 Supersedes `tiaa-elementor-forms-invite-action` (deactivate and remove the old plugin before activating this one). Two features:
 
 1. **Discourse invite form action** — custom "TIAA Invite" submit action for Elementor Pro forms; POSTs to tiaa-wpplugin's `/invite` REST endpoint. JS lives in `assets/js/form-handler.js`, enqueued on demand only when a form with the `tiaa` action is on the page.
