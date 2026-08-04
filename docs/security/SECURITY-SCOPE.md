@@ -45,7 +45,7 @@ Paths:
 | Cookie | File | Purpose |
 |---|---|---|
 | `tiaa_member` | `tiaa-wpplugin/lib/TiaaHooks.php:71`, `lib/TiaaMemberCookie.php:40/54/58` | drives `tiaa-member` body class / three-state UI logic |
-| `sso` / `sig` (GET, not cookie) | `tiaa-wpplugin/lib/TiaaLoginRedirect.php:102` | dead code per class docblock ("no-op in SSO client mode") — still parses the request |
+| `sso` / `sig` (GET, not cookie) | `tiaa-wpplugin/lib/TiaaLoginRedirect.php:126` | active as of v0.0.11 — inert on the SSO success path (WP-Discourse redirects first), but drives the failure-path redirect to Discourse login with `?sso_failed=1` |
 
 ### Elementor-originated input (indirect)
 `tiaa-elementor/form-action/tiaa-invite-action.php` is an Elementor Pro "Form Action" — it receives the submitted form's `$record` server-side inside Elementor's own form-processing pipeline (not a route we register), then relays the data via `wp_remote_post()` to tiaa-wpplugin's own `/invite` REST route (`run()`, :113–144). This is the origin of the `form_fields[...]`-shaped payloads that `TiaaHooks::invite_to_discourse()` parses.
@@ -74,7 +74,7 @@ No Stripe / WP SimplePay / Amazon SES / `wp_mail()` calls exist in any of the th
 | REST route auth | `tiaa-wpplugin/lib/TiaaHooks.php:142-324` | see REST table above — two of three routes intentionally public |
 | Nonce coverage gaps | `ScreenedEmailsHandler.php` | only the CSV-export path (:190) has a confirmed `check_admin_referer()` call; add/delete/import paths not yet verified |
 | `edit_post` capability check | `tiaa-quick-edit/tiaa-quick-edit.php:219,270` | per-post capability check present on both the save and AJAX-fetch paths |
-| Dormant SSO-provider code | `tiaa-wpplugin/lib/TiaaLoginRedirect.php` | reads `$_GET['sso']`/`$_GET['sig']` but class is documented as a no-op in current SSO-client configuration |
+| SSO failure-path redirect | `tiaa-wpplugin/lib/TiaaLoginRedirect.php` | reads `$_GET['sso']`/`$_GET['sig']`; as of v0.0.11 redirects failed SSO callbacks to Discourse login with `?sso_failed=1`, and registers Discourse's host on `allowed_redirect_hosts` |
 
 ---
 
@@ -95,7 +95,7 @@ No Stripe / WP SimplePay / Amazon SES / `wp_mail()` calls exist in any of the th
 | `lib/options-utilities.php` | 159 | WP options helpers |
 | `lib/TiaaMemberCookie.php` | 62 | Sets/reads `tiaa_member` cookie |
 | `lib/TiaaReturnUrlCookie.php` | 68 | Writes `tiaa_wp_return_url` cookie pre-SSO |
-| `lib/TiaaLoginRedirect.php` | 104 | No-op in current SSO-client mode; kept for reference |
+| `lib/TiaaLoginRedirect.php` | 130 | Redirects failed SSO callbacks to Discourse login (`?sso_failed=1`); inert on the success path (v0.0.11) |
 | `admin/settings-validator.php` | 529 | Validation helpers for the Settings API pattern |
 | `admin/WelcomeSettings.php` | 501 | Welcome-messages admin tab |
 | `admin/GroupInviteSettings.php` | 342 | Group-invite admin tab |
