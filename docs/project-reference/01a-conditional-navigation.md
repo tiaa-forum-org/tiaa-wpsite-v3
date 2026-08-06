@@ -93,7 +93,9 @@ Use Elementor Pro's built-in visibility conditions on individual widgets:
 
 **For "Logout" Link:**
 - Visibility Condition: Show when `User is Logged In`
-- Links to: WordPress logout URL with redirect
+- Links to: `/tiaa-logout?redirect_to=/` — **not** `wp_logout_url()` /
+  `/wp-login?action=logout` (Wordfence lockout collision; see
+  `03 elementor header template.md`)
 
 ---
 
@@ -194,7 +196,7 @@ When opened:
 | Join/Signup Page | `/join` or `/membership` | Public access, includes payment form |
 | Discourse Forum | `https://forum.tiaa-forum.org` (or subdomain) | WP-Discourse handles SSO automatically |
 | Contribution Page | `/contribute` | Member-only access |
-| Logout | `wp_logout_url()` with redirect | WordPress function, redirects to homepage |
+| Logout | `/tiaa-logout?redirect_to=/` | tiaa-wpplugin custom route; avoids Wordfence lockout on `wp-login.php` |
 | Forum Explainer | `/the-forum` or `/about-forum` | Public page explaining what the forum is |
 
 ---

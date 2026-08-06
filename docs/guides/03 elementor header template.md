@@ -289,7 +289,10 @@ For the MVP, we'll add TWO buttons that toggle based on login state:
 
 2. **Configure:**
    - **Text**: "Logout" or "Sign Out"
-   - **Link**: WordPress logout URL (use dynamic tag if available, or `wp_logout_url()`)
+   - **Link**: `/tiaa-logout?redirect_to=/`
+   - ⚠️ **Do NOT use `/wp-login?action=logout` or `wp_logout_url()`** — see
+     "Why the Logout Link Uses `/tiaa-logout`" under Notes for Future
+     Maintainers below before changing this.
 
 3. **Style**: Minimal - small text link
 
@@ -550,3 +553,21 @@ Container (Navy background, full width, sticky)
 - Ensure buttons (Join, Forum, Contribute, Logout) show/hide based on user login state
 - Refer to `01a-conditional-navigation.md` for implementation details
 - This can be configured later as part of Phase 2
+
+### Why the Logout Link Uses `/tiaa-logout`
+
+The Logout link/button href must be **`/tiaa-logout?redirect_to=/`** —
+**never** `/wp-login?action=logout` or `wp_logout_url()`.
+
+**Why:** Wordfence's Brute Force Protection locks out `wp-login.php` after a
+handful of failed login attempts. Because the old logout link pointed at
+`wp-login.php?action=logout`, a locked-out visitor couldn't log out either —
+logout and login shared the same script, so a login lockout became a logout
+lockout too. `/tiaa-logout` (added in `tiaa-wpplugin` v0.0.12) is a separate
+endpoint that never touches `wp-login.php`, so it stays reachable during a
+lockout. It still logs the member out of Discourse correctly — see the
+`tiaa-wpplugin` README for how.
+
+**If a future Elementor header re-import or redesign resets this link**,
+re-enter the href above. It will look unfamiliar (not a WordPress-standard
+URL) — that's expected, don't "fix" it back to `/wp-login?action=logout`.
