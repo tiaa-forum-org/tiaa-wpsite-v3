@@ -86,7 +86,7 @@ tab** (same-origin).
 > same four keys a genuine successful invite returns. No structural
 > difference visible from `Object.keys()` alone.
 
-- [ ] Screened-email response includes `body_response`; key set matches a genuine success
+- [x] Screened-email response includes `body_response`; key set matches a genuine success
 
 ## N3 — Invite rate limiter vs. reverse proxy
 
