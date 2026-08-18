@@ -1,5 +1,15 @@
 # F1–F8 Manual Verification Runbook
 
+> **CLOSED 2026-08-18.** All 8 findings verified in a real browser against
+> wp-test, including two regressions this pass caught and fixed:
+> `tiaa-wpplugin` `ad97dac` (F2 — admin links needed a `wp_rest` nonce) and
+> `34055a2` (F8 — log download returned an empty body). The F7 documentation
+> follow-up in `tiaa-elementor` also landed (`6c8a4f3`). Archived here as a
+> historical record — not an active checklist. `tiaa-wpplugin` is at
+> `v0.0.14`; `tiaa-quick-edit` and `tiaa-wpplugin` also both lowered
+> `Requires PHP` to match real-world environments (see each plugin's
+> `CLAUDE.md`, flagged there for revisiting).
+
 Manual QA companion to `SECURITY-REVIEW.md`. Every fix (tiaa-wpplugin v0.0.13,
 commits `6182147..d13a3af` on `main`) was verified with a scripted test against
 the wp-test Docker container before being committed. This walks through the
