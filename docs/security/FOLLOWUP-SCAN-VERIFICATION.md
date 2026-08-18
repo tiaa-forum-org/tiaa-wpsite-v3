@@ -57,16 +57,65 @@ as the Screened-Emails forms (F3).
 
 ## N2 — Screened-email enumeration (residual F6 gap)
 
-**Status: not yet fixed — awaiting a decision on the timing-side-channel half.**
-Add a verification section here once N2 is addressed.
+Fixed (shape half only) in `tiaa-wpplugin` commit `e441c57`. The screened-email
+invite response now includes a `body_response` key, matching a genuine
+success's key set. **The timing side-channel is a known, accepted residual —
+not fixed.** The screened response still returns near-instantly since it
+skips the Discourse API call; a real invite makes a network round trip. This
+was a deliberate decision, not an oversight — don't re-flag it without a new
+decision to close it.
+
+**Setup:** no login needed. Run from the browser console **on a wp-test.test
+tab** (same-origin).
+
+1. Open any page on wp-test.test, open the console (F12), and paste this:
+
+   ```js
+   (async () => {
+     const screened = await fetch('/wp-json/tiaa_wpplugin/v1/invite', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ name: 'N2 Test', email: 'foo@flee.flum' })
+     }).then(r => r.json());
+     console.log('screened response keys:', Object.keys(screened));
+     console.log('screened response:', screened);
+   })();
+   ```
+
+> **Expected:** keys are `success, status, response, body_response` — the
+> same four keys a genuine successful invite returns. No structural
+> difference visible from `Object.keys()` alone.
+
+- [ ] Screened-email response includes `body_response`; key set matches a genuine success
 
 ## N3 — Invite rate limiter vs. reverse proxy
 
-**Status: awaiting a decision on production network topology.**
-Add a verification section here once N3 is addressed.
+**Resolved as documentation, no code change.** Confirmed with the maintainer:
+production has no reverse proxy in front of PHP, so `REMOTE_ADDR` is the real
+client IP and the existing per-IP rate limiter is correct as written. Recorded
+directly on `invite_rate_limit_exceeded()`'s docblock in `tiaa-wpplugin`
+(commit `cb020b5`) so this assumption gets re-checked if the deployment
+topology ever changes — nothing in the code itself would catch that silently.
+
+No browser test applies here — there's no behavior change to verify.
+
+- [x] Decision recorded (no proxy in prod; REMOTE_ADDR usage confirmed correct)
 
 ## N4 — `/tiaa-logout` bypasses F5's logout-CSRF fix
 
-**Status: awaiting a decision (accept as documented tradeoff, or add the
-same Referer gate to `/tiaa-logout`).**
-Add a verification section here once N4 is addressed.
+**Resolved as documentation, no code change.** Reviewed and accepted as a
+deliberate inconsistency: logout-CSRF is low-impact (a forced logout is a
+nuisance, not a compromise), and `/tiaa-logout`'s entire purpose is staying
+reachable with zero friction during a Wordfence lockout — adding a Referer
+gate or nonce here would undercut that. Cross-referenced in both
+`TiaaLogoutRoute`'s and `skip_logout_confirmation()`'s docblocks (commit
+`cb020b5`) so it reads as a reviewed decision, not an oversight, from either
+side.
+
+No browser test applies here — the behavior (force-logout via `/tiaa-logout`
+with no confirmation, from any referring page) is unchanged and intentional.
+If you want to see it, the same PoC pattern from F5 applies:
+`<img src="https://wp-test.test/tiaa-logout">` on any page still logs you out
+immediately, unlike the equivalent `wp-login.php?action=logout` link.
+
+- [x] Decision recorded (accepted as intentional; documented in both classes' docblocks)
