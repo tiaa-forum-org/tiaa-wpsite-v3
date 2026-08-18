@@ -116,7 +116,7 @@ for step 2.
 > ```
 > No post content is ever returned to an anonymous caller.
 
-- [ ] Admin links still work; anonymous request gets `rest_forbidden`
+- [x] Admin links still work; anonymous request gets `rest_forbidden`
 
 ---
 
@@ -163,7 +163,7 @@ use as the CSRF target.
    Delete button (this exercises the legitimate delete path too — it should
    succeed with no confirmation-page detour).
 
-- [ ] Add/delete work normally; the forged delete was rejected, not silently applied
+- [x] Add/delete work normally; the forged delete was rejected, not silently applied
 
 ---
 
@@ -184,7 +184,7 @@ button is untouched.
 > **Expected:** one export control, and it works. There's nothing left on the
 > page that accepts a filename or writes to the server.
 
-- [ ] Only the Download CSV button remains, and it still works
+- [x] Only the Download CSV button remains, and it still works
 
 ---
 
@@ -233,7 +233,7 @@ logged out, not who's logged in.
 > because this navigation's Referer is the Discourse host, matching the
 > configured Discourse URL.
 
-- [ ] Attacker-page link required confirmation; Discourse-referred link still skipped it
+- [x] Attacker-page link required confirmation; Discourse-referred link still skipped it
 
 ---
 
@@ -272,7 +272,7 @@ same-origin).
 > `429 {success: false, code: "rate_limited", ...}`. Wait 60 seconds and the
 > count resets for that IP.
 
-- [ ] First 5 responses were uniform (no `dropped_email` code); 6th and 7th were rate-limited
+- [x] First 5 responses were uniform (no `dropped_email` code); 6th and 7th were rate-limited
 
 ---
 
@@ -314,5 +314,15 @@ working path.
 
 > **Expected:** the real log file downloads normally — this is a different
 > code path (`action=tiaa_secure_file`) and wasn't touched.
+
+> **Caught by this exact check (tiaa-wpplugin commit `34055a2`):** the
+> downloaded file had correct headers and filename but an empty body — a
+> pre-existing bug, not something F8 introduced. `output_file()` returned
+> normally after `readfile()`, letting `tiaa_serve_file()`'s
+> `finally { ob_end_clean(); }` discard the buffered file content before it
+> reached the browser. The CSV path was never affected because it calls
+> `exit()` internally, before that `finally` runs. `output_file()` now does
+> the same. If a log download is ever empty again, check for that `exit()`
+> first.
 
 - [ ] Dead hook is inert (no fatal); real Download log still works
