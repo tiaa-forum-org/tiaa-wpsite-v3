@@ -288,8 +288,11 @@ cookie is presentation-only and must never be used to gate real content.
 > Nothing to click — there's no behavior change to reproduce here, the
 > finding was informational.
 
-- [ ] Read the CLAUDE.md note — still open: the matching warning hasn't been
-      added to `tiaa-elementor`'s own docs yet
+> **Follow-up closed (tiaa-elementor commit `6c8a4f3`):** the matching
+> warning has now been added to `tiaa-elementor/CLAUDE.md`, next to the
+> `.tiaa-member-only`/`.tiaa-anon-only` description.
+
+- [x] Read the CLAUDE.md note in both tiaa-wpplugin and tiaa-elementor
 
 ---
 
@@ -325,4 +328,4 @@ working path.
 > the same. If a log download is ever empty again, check for that `exit()`
 > first.
 
-- [ ] Dead hook is inert (no fatal); real Download log still works
+- [x] Dead hook is inert (no fatal); real Download log still works
